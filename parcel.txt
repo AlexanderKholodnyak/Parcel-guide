@@ -1,0 +1,42 @@
+1.Создаем публичный репозиторий на ГитХаб и клонируем его на комп в выбранную папку, например: goit-js-hw-10-food-service
+При создании ставим чекбокс на *Add a README file, *Add .gitignore->node (не нужно следить за node).
+2.Открываем с помощью VSCode (необходимо, чтобы Bush был установлен на компе - открываем терминал, bush в VSC).
+3. Инициализируем в нашем проекте npm c флагом -y (yes - поставит все дефолтные значения):
+                 $ npm init -y
+4.Устанавливаем (i - install) в проект (глобально не нужно, мы всегда хотим ставить локально) для разработки (--save-dev) бандлер(сборщик) Parcel:
+            $ npm i parcel-bundler --save-dev
+5.В появившемся в проекте в файле package.json вносим изменения:
+a) в "scripts":
+    "scripts": {
+    "dev": "parcel src/*.html",
+    "build": "parcel build src/*.html --public-url /goit-js-hw-10-food-service/",
+    "deploy": "gh-pages -d dist",
+    "predeploy": "npm run build"
+  },
+********************************************************************
+src/*.html - *(звездочка) позволяет сбилдить все файлы с рашриением .html
+"build": "parcel build src/*.html --public-url /имя_репозитория/" - общий вид, в нашем случае: goit-js-hw-10-food-service.
+ --public-url /goit-js-hw-10-food-service/ - связано с файловой системой и ее вложденностью, не от корня, якобы.
+"predeploy": "npm run build" - позволяет деплоить одной командой (npm run deploy),предварительно сразу выполнить build.
+б)в "homepage":
+"homepage": "https://SergeyYakushev.github.io/goit-js-hw-10-food-service"
+"homepage": "https://ваше_имя.github.io/имя_репозитория" - общий вид
+6. Ставим в проект пакеты:
+    $ npm install gh-pages //Publish files to a gh-pages branch on GitHub (--save-dev можно с флагом)
+    $ npm install parcel-plugin-nuke-dist //Parcel plugin to wipe (чтобы стереть) dist directory before compiling a new bundle  (--save-dev можно с флагом)
+Также, например, необходимые другие пакеты для работы:
+   $ npm install --save-dev parcel-plugin-handlebars-precompile // Для шаблонизации с помощью Нandlebars, если надо в проекте - не обязательно, как пример.
+    
+7. В проекте создаем необходимую структуру папок, например в корне проекта создаем папку src в ней файлы index.js, index.html, image,tampletesи так далее по необходимости деления кода на файлы..
+ В файле index.html перед закрывающимся тегом </body> не забываем написать <script src="./index.js"></script>
+ В файл index.js не забываем импортировать с других файлов и библиотек, например, для этого проекта при такой структуре папок как на скрине(http://joxi.ru/LmGD3nJhwGJ552):
+import menuCardTmpl from "./templates/card_menu.hbs";
+import cards from './menu.json'
+import './styles.css';
+Пишем сам код, командой из скриптов:
+     $ npm run dev //запускаем проект для разработки
+8. Деплоим на github.com наш проект после всего проделанного выше:
+    $ npm run deploy
+9. Пушим наш проект на github (не  забываем комитить).
+10. В репозитории получаем 2 ветки, в gh-pages(ветка) - в ней содержится распакованная папка dist нашего проекта. 
+Ссылка на сайт в "homepage": https://SergeyYakushev.github.io/goit-js-hw-10-food-service.
